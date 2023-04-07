@@ -10,6 +10,7 @@ const { typeDefs, resolvers } = require("./schemas");
 
 //importing middleware
 const { authMiddleware } = require("./utils/auth");
+const { emit } = require("./models/Book");
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -40,14 +41,18 @@ app.get("*", (req, res) => {
 // app.use(routes);
 
 async function startApolloServer() {
-	server.applyMiddleware({ app });
+	try {
+		server.applyMiddleware({ app });
 
-	db.once("open", async () => {
-		await server.start();
-		app.listen(PORT, () =>
-			console.log(`🌍 Now listening on localhost:${PORT}`)
-		);
-	});
+		db.once("open", async () => {
+			await server.start();
+			app.listen(PORT, () =>
+				console.log(`🌍 Now listening on localhost:${PORT}`)
+			);
+		});
+	} catch (e) {
+		console.error(e)
+	}
 }
 
 startApolloServer();

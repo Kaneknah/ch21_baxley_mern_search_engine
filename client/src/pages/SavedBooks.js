@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { Container, Card, Button, Row, Col } from "react-bootstrap";
 
 // import { getMe, deleteBook } from '../utils/API';
@@ -7,13 +7,13 @@ import { removeBookId } from "../utils/localStorage";
 //GraphQL imports
 import { REMOVE_BOOK } from "../utils/mutations";
 import { GET_ME } from "../utils/queries";
-import { useQuery, useMutation } from "@apollo/client";
+import { useQuery, useMutation } from '@apollo/client';
 
 const SavedBooks = () => {
 	// const [userData, setUserData] = useState({});
 
 	// use this to determine if `useEffect()` hook needs to run again
-	const { loading, data } = useQuery(GET_Me);
+	const { loading, data } = useQuery(GET_ME);
 	const [removeBook, { error }] = useMutation(REMOVE_BOOK);
 
 	const userData = data?.me || [];
